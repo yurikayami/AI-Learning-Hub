@@ -127,11 +127,11 @@
 
 ### Desktop View
 
-<img src="https://i.ibb.co/PvNcTHS0/Code-Jw-VWpv47-Yr.png" alt="Dashboard Desktop" width="800"/>
+<img src="https://i.ibb.co/vvHqvWk7/msedge-LD68-FDLA2-X.png" alt="Dashboard Desktop" width="800"/>
 
 ### Mobile View
 
-<img src="https://i.ibb.co/YBxrG8fm/msedge-5hx-Jfpm-Gd-K.png" alt="Mobile View" width="375"/>
+<img src="https://i.ibb.co/HLsdyhp9/msedge-e-Ly-Zlfm-Qt-R.png" alt="Mobile View" width="375"/>
 
 ### AI Chat Interface
 
