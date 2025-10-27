@@ -5,6 +5,7 @@ import AIStudyRoom from './pages/AIStudyRoom';
 import MyPlanner from './pages/MyPlanner';
 import PlaceholderPage from './pages/PlaceholderPage';
 import LibraryPage from './pages/LibraryPage';
+import AnalyticsPage from './pages/AnalyticsPage';
 // Fix: Import StoredItemCreation to correctly type the data for new library items.
 import type { Page, StudyTab, StoredItem, StoredItemCreation } from './types';
 
@@ -12,6 +13,7 @@ const App: React.FC = () => {
   const [activePage, setActivePage] = useState<Page>('dashboard');
   const [initialStudyTab, setInitialStudyTab] = useState<StudyTab>('solve');
   const [libraryItems, setLibraryItems] = useState<StoredItem[]>([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const navigateToStudyRoom = useCallback((tab: StudyTab) => {
     setInitialStudyTab(tab);
@@ -32,7 +34,7 @@ const App: React.FC = () => {
   const renderContent = () => {
     switch (activePage) {
       case 'dashboard':
-        return <Dashboard navigateToStudyRoom={navigateToStudyRoom} />;
+        return <Dashboard navigateToStudyRoom={navigateToStudyRoom} libraryItems={libraryItems} />;
       case 'study':
         return <AIStudyRoom initialTab={initialStudyTab} addToLibrary={addToLibrary} />;
       case 'planner':
@@ -40,16 +42,21 @@ const App: React.FC = () => {
       case 'library':
         return <LibraryPage items={libraryItems} />;
       case 'analytics':
-        return <PlaceholderPage title="Thống kê & Thành tích" description="Theo dõi tiến độ học tập và xem các thành tích bạn đạt được tại đây." />;
+        return <AnalyticsPage libraryItems={libraryItems} />;
       default:
-        return <Dashboard navigateToStudyRoom={navigateToStudyRoom} />;
+        return <Dashboard navigateToStudyRoom={navigateToStudyRoom} libraryItems={libraryItems} />;
     }
   };
 
   return (
-    <div className="flex h-screen bg-slate-100">
-      <Sidebar activePage={activePage} setActivePage={setActivePage} />
-      <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+    <div className="flex h-screen bg-slate-50 overflow-hidden">
+      <Sidebar 
+        activePage={activePage} 
+        setActivePage={setActivePage}
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
+      <main className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-6 lg:p-8">
         {renderContent()}
       </main>
     </div>

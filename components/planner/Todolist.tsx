@@ -71,43 +71,43 @@ const Todolist: React.FC<TodolistProps> = ({ tasks, setTasks }) => {
 
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-sm h-full flex flex-col">
-      <h3 className="text-lg font-bold text-slate-800">Lộ trình học tập</h3>
-      <p className="text-sm text-slate-500 mb-4">Các mục tiêu và nhiệm vụ cần hoàn thành.</p>
+    <div className="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-slate-100 h-full flex flex-col">
+      <h3 className="text-base md:text-lg font-bold text-slate-800">Lộ trình học tập</h3>
+      <p className="text-xs md:text-sm text-slate-500 mb-3 md:mb-4">Các mục tiêu và nhiệm vụ cần hoàn thành.</p>
       
       {/* AI Generator Section */}
-      <div className="mb-4">
-        <button onClick={() => setShowGenerator(!showGenerator)} className="flex items-center text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors w-full text-left p-2 rounded-lg hover:bg-indigo-50">
-            <SparklesIcon className="w-5 h-5 mr-2 flex-shrink-0" />
+      <div className="mb-3 md:mb-4">
+        <button onClick={() => setShowGenerator(!showGenerator)} className="flex items-center text-xs md:text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors w-full text-left p-2 rounded-lg hover:bg-indigo-50">
+            <SparklesIcon className="w-4 h-4 md:w-5 md:h-5 mr-2 flex-shrink-0" />
             <span>{showGenerator ? 'Ẩn trình tạo kế hoạch AI' : 'Tạo lộ trình học tập với AI'}</span>
         </button>
         {showGenerator && (
-            <div className="bg-slate-50 p-4 rounded-md mt-2 border border-slate-200">
+            <div className="bg-slate-50 p-3 md:p-4 rounded-md mt-2 border border-slate-200">
                 <form onSubmit={handleGeneratePlan}>
-                    <div className="space-y-3">
+                    <div className="space-y-2 md:space-y-3">
                         <div>
-                            <label className="text-sm font-medium text-slate-700">Chủ đề học tập</label>
+                            <label className="text-xs md:text-sm font-medium text-slate-700">Chủ đề học tập</label>
                             <input
                                 type="text"
                                 value={topic}
                                 onChange={(e) => setTopic(e.target.value)}
                                 placeholder="VD: Ôn thi THPT môn Lý"
-                                className="mt-1 w-full p-2 border bg-white border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition text-sm"
+                                className="mt-1 w-full p-2 border bg-white border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition text-xs md:text-sm"
                             />
                         </div>
                          <div>
-                            <label className="text-sm font-medium text-slate-700">Mục tiêu của bạn</label>
+                            <label className="text-xs md:text-sm font-medium text-slate-700">Mục tiêu của bạn</label>
                             <input
                                 type="text"
                                 value={goal}
                                 onChange={(e) => setGoal(e.target.value)}
                                 placeholder="VD: Đạt 9+ điểm"
-                                className="mt-1 w-full p-2 border bg-white border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition text-sm"
+                                className="mt-1 w-full p-2 border bg-white border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition text-xs md:text-sm"
                             />
                         </div>
                     </div>
                     {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
-                    <button type="submit" disabled={isGenerating || !topic.trim() || !goal.trim()} className="w-full mt-3 bg-indigo-600 text-white font-semibold py-2 px-3 rounded-lg hover:bg-indigo-700 transition-colors disabled:bg-indigo-300 disabled:cursor-not-allowed flex items-center justify-center text-sm">
+                    <button type="submit" disabled={isGenerating || !topic.trim() || !goal.trim()} className="w-full mt-2 md:mt-3 bg-indigo-600 text-white font-semibold py-2 px-3 rounded-lg hover:bg-indigo-700 transition-colors disabled:bg-indigo-300 disabled:cursor-not-allowed flex items-center justify-center text-xs md:text-sm">
                         {isGenerating ? (
                            <>
                             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
@@ -120,50 +120,50 @@ const Todolist: React.FC<TodolistProps> = ({ tasks, setTasks }) => {
         )}
       </div>
 
-      <form onSubmit={handleAddTask} className="flex gap-2 mb-4">
+      <form onSubmit={handleAddTask} className="flex gap-2 mb-3 md:mb-4">
         <input
           type="text"
           value={newTaskText}
           onChange={(e) => setNewTaskText(e.target.value)}
           placeholder="Hoặc thêm mục tiêu thủ công..."
-          className="flex-grow p-2 border bg-white border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+          className="flex-grow p-2 border bg-white border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition text-xs md:text-sm"
         />
         <button type="submit" className="bg-indigo-600 text-white p-2 rounded-lg hover:bg-indigo-700 transition-colors flex-shrink-0">
-            <PlusIcon className="w-6 h-6" />
+            <PlusIcon className="w-5 h-5 md:w-6 md:h-6" />
         </button>
       </form>
 
-      <div className="mb-4">
+      <div className="mb-3 md:mb-4">
         <div className="flex justify-between items-center mb-1">
-          <span className="text-sm font-medium text-slate-600">Tiến độ</span>
-          <span className="text-sm font-bold text-indigo-600">{Math.round(progress)}%</span>
+          <span className="text-xs md:text-sm font-medium text-slate-600">Tiến độ</span>
+          <span className="text-xs md:text-sm font-bold text-indigo-600">{Math.round(progress)}%</span>
         </div>
-        <div className="w-full bg-slate-200 rounded-full h-2.5">
-          <div className="bg-indigo-600 h-2.5 rounded-full transition-all duration-500" style={{ width: `${progress}%` }}></div>
+        <div className="w-full bg-slate-200 rounded-full h-2 md:h-2.5">
+          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 h-2 md:h-2.5 rounded-full transition-all duration-500" style={{ width: `${progress}%` }}></div>
         </div>
       </div>
       
-      <div className="flex-1 overflow-y-auto pr-2 -mr-2 space-y-2">
+      <div className="flex-1 overflow-y-auto pr-1 -mr-1 space-y-1.5 md:space-y-2">
         {tasks.map(task => (
-          <div key={task.id} className="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 group">
-            <div className="flex items-center">
+          <div key={task.id} className="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 group transition-colors">
+            <div className="flex items-center flex-1 min-w-0">
               <input
                 type="checkbox"
                 checked={task.completed}
                 onChange={() => handleToggleTask(task.id)}
-                className="w-5 h-5 text-indigo-600 border-slate-300 rounded focus:ring-indigo-500 cursor-pointer"
+                className="w-4 h-4 md:w-5 md:h-5 text-indigo-600 border-slate-300 rounded focus:ring-indigo-500 cursor-pointer flex-shrink-0"
               />
-              <span className={`ml-3 text-slate-700 ${task.completed ? 'line-through text-slate-400' : ''}`}>
+              <span className={`ml-2 md:ml-3 text-xs md:text-sm text-slate-700 ${task.completed ? 'line-through text-slate-400' : ''} break-words`}>
                 {task.text}
               </span>
             </div>
-            <button onClick={() => handleDeleteTask(task.id)} className="text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
-                <TrashIcon className="w-5 h-5" />
+            <button onClick={() => handleDeleteTask(task.id)} className="text-slate-400 hover:text-red-500 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity flex-shrink-0 ml-2">
+                <TrashIcon className="w-4 h-4 md:w-5 md:h-5" />
             </button>
           </div>
         ))}
         {tasks.length === 0 && (
-            <p className="text-center text-slate-400 mt-8">Chưa có mục tiêu nào. Hãy bắt đầu ngay!</p>
+            <p className="text-center text-slate-400 text-xs md:text-sm mt-8">Chưa có mục tiêu nào. Hãy bắt đầu ngay!</p>
         )}
       </div>
     </div>

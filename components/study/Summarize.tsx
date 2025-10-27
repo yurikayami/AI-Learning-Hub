@@ -35,27 +35,27 @@ const Summarize: React.FC<SummarizeProps> = ({ addToLibrary }) => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 h-full">
       <div className="flex flex-col">
-        <h3 className="text-lg font-bold mb-3">Nội dung cần tóm tắt</h3>
+        <h3 className="text-base md:text-lg font-bold mb-2 md:mb-3">Nội dung cần tóm tắt</h3>
         <textarea
-          className="w-full flex-1 p-3 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none"
+          className="w-full flex-1 p-2 md:p-3 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none text-sm md:text-base"
           placeholder="Dán văn bản của bạn vào đây..."
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <div className="mt-4 grid grid-cols-2 gap-4">
+        <div className="mt-3 md:mt-4 grid grid-cols-2 gap-3 md:gap-4">
             <div>
-                <label className="block text-sm font-medium text-slate-700">Độ dài</label>
-                <select value={length} onChange={(e) => setLength(e.target.value)} className="mt-1 block w-full pl-3 pr-10 py-2 text-base bg-white border border-slate-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                <label className="block text-xs md:text-sm font-medium text-slate-700">Độ dài</label>
+                <select value={length} onChange={(e) => setLength(e.target.value)} className="mt-1 block w-full pl-2 md:pl-3 pr-8 md:pr-10 py-1.5 md:py-2 text-sm md:text-base bg-white border border-slate-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md">
                     <option>Ngắn</option>
                     <option>Vừa</option>
                     <option>Chi tiết</option>
                 </select>
             </div>
             <div>
-                <label className="block text-sm font-medium text-slate-700">Định dạng</label>
-                <select value={format} onChange={(e) => setFormat(e.target.value)} className="mt-1 block w-full pl-3 pr-10 py-2 text-base bg-white border border-slate-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                <label className="block text-xs md:text-sm font-medium text-slate-700">Định dạng</label>
+                <select value={format} onChange={(e) => setFormat(e.target.value)} className="mt-1 block w-full pl-2 md:pl-3 pr-8 md:pr-10 py-1.5 md:py-2 text-sm md:text-base bg-white border border-slate-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md">
                     <option>Gạch đầu dòng</option>
                     <option>Đoạn văn</option>
                 </select>
@@ -64,24 +64,24 @@ const Summarize: React.FC<SummarizeProps> = ({ addToLibrary }) => {
         <button
           onClick={handleSummarize}
           disabled={isLoading || !text.trim()}
-          className="w-full mt-4 bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors disabled:bg-indigo-300 disabled:cursor-not-allowed"
+          className="w-full mt-3 md:mt-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold py-2.5 md:py-3 px-4 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all disabled:from-indigo-300 disabled:to-purple-300 disabled:cursor-not-allowed shadow-md text-sm md:text-base"
         >
           {isLoading ? 'Đang tóm tắt...' : 'Tóm tắt ngay'}
         </button>
       </div>
       
-      <div className="flex flex-col bg-slate-50 p-4 rounded-lg">
-        <h3 className="text-lg font-bold mb-3">Kết quả</h3>
-        <div className="flex-1 overflow-y-auto pr-2">
+      <div className="flex flex-col bg-slate-50 p-3 md:p-4 rounded-lg border border-slate-200">
+        <h3 className="text-base md:text-lg font-bold mb-2 md:mb-3">Kết quả</h3>
+        <div className="flex-1 overflow-y-auto pr-1 md:pr-2">
             {isLoading && (
                 <div className="flex items-center justify-center h-full">
                     <div className="flex flex-col items-center">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
-                        <p className="mt-4 text-slate-500">AI đang phân tích nội dung...</p>
+                        <div className="animate-spin rounded-full h-10 w-10 md:h-12 md:w-12 border-b-2 border-indigo-600"></div>
+                        <p className="mt-3 md:mt-4 text-slate-500 text-xs md:text-sm">AI đang phân tích nội dung...</p>
                     </div>
                 </div>
             )}
-            {summary ? <MarkdownRenderer content={summary} /> : !isLoading && <p className="text-slate-400 text-center mt-10">Bản tóm tắt sẽ xuất hiện ở đây.</p>}
+            {summary ? <div className="text-xs md:text-sm"><MarkdownRenderer content={summary} /></div> : !isLoading && <p className="text-slate-400 text-center mt-6 md:mt-10 text-xs md:text-sm">Bản tóm tắt sẽ xuất hiện ở đây.</p>}
         </div>
       </div>
     </div>
