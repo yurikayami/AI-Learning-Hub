@@ -106,7 +106,7 @@ const QuizGenerator: React.FC<QuizGeneratorProps> = ({ addToLibrary }) => {
             <button
               onClick={handleGenerate}
               disabled={quizState === 'generating' || !text.trim()}
-              className="w-full mt-6 bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors disabled:bg-indigo-300 disabled:cursor-not-allowed flex items-center justify-center"
+              className="w-full mt-6 bg-slate-900 text-white font-medium py-3 px-4 rounded-lg hover:bg-slate-800 transition-all disabled:bg-slate-300 disabled:cursor-not-allowed flex items-center justify-center shadow-sm"
             >
               {quizState === 'generating' ? (
                 <>
@@ -135,7 +135,7 @@ const QuizGenerator: React.FC<QuizGeneratorProps> = ({ addToLibrary }) => {
                     </div>
                 </div>
              ))}
-             <button onClick={handleSubmitQuiz} className="w-full bg-green-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-green-700 transition-colors">
+             <button onClick={handleSubmitQuiz} className="w-full bg-slate-900 text-white font-medium py-3 px-4 rounded-lg hover:bg-slate-800 transition-all shadow-sm">
                 Nộp bài
              </button>
           </div>
@@ -165,7 +165,7 @@ const QuizGenerator: React.FC<QuizGeneratorProps> = ({ addToLibrary }) => {
                         </div>
                     );
                  })}
-                 <button onClick={handleReset} className="w-full bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors">
+                 <button onClick={handleReset} className="w-full bg-slate-900 text-white font-medium py-3 px-4 rounded-lg hover:bg-slate-800 transition-all shadow-sm">
                     Tạo quiz khác
                 </button>
             </div>

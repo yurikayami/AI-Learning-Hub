@@ -1,8 +1,7 @@
 
 import React, { useState } from 'react';
-import type { TodoItem } from '../types';
+import type { TodoItem, StoredItemCreation } from '../types';
 import Todolist from '../components/planner/Todolist';
-import Calendar from '../components/planner/Calendar';
 
 // Dữ liệu mẫu ban đầu
 const initialTodos: TodoItem[] = [
@@ -11,7 +10,11 @@ const initialTodos: TodoItem[] = [
   { id: 3, text: 'Xem video bài giảng về Mạch điện xoay chiều', completed: false },
 ];
 
-const MyPlanner: React.FC = () => {
+interface MyPlannerProps {
+  addToLibrary: (itemData: StoredItemCreation) => void;
+}
+
+const MyPlanner: React.FC<MyPlannerProps> = ({ addToLibrary }) => {
   const [tasks, setTasks] = useState<TodoItem[]>(initialTodos);
 
   return (
@@ -21,13 +24,8 @@ const MyPlanner: React.FC = () => {
         <p className="text-slate-500 mt-1 text-sm md:text-base">Tổ chức lộ trình và quản lý thời gian học tập của bạn.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 md:gap-8">
-        <div className="lg:col-span-2 order-2 lg:order-1">
-            <Todolist tasks={tasks} setTasks={setTasks} />
-        </div>
-        <div className="lg:col-span-3 order-1 lg:order-2">
-            <Calendar />
-        </div>
+      <div className="max-w-5xl mx-auto">
+        <Todolist tasks={tasks} setTasks={setTasks} addToLibrary={addToLibrary} />
       </div>
     </div>
   );

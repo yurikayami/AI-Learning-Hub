@@ -52,16 +52,87 @@ export const getChatResponse = async (history: ChatMessage[], newMessage: string
   }
 };
 
-export const generateSummary = async (text: string, length: string, format: string): Promise<string> => {
-    const prompt = `Bạn là một chuyên gia tóm tắt nội dung. Hãy tóm tắt văn bản sau đây.
-    - Độ dài: ${length}
-    - Định dạng: ${format}
+export const generateSummary = async (
+  text: string, 
+  length: string, 
+  summaryType: string = 'Tổng quan',
+  language: string = 'Dễ hiểu',
+  includeExamples: boolean = false,
+  includeQuestions: boolean = false,
+  includeKeyTerms: boolean = false
+): Promise<string> => {
+    // Xây dựng system instruction dựa trên kiểu tóm tắt
+    let typeInstruction = '';
+    switch (summaryType) {
+      case 'Học thuật':
+        typeInstruction = 'Tạo bản tóm tắt mang tính học thuật, tập trung vào lý thuyết, khái niệm và mối liên hệ giữa các ý chính. Sử dụng thuật ngữ chính xác.';
+        break;
+      case 'Ghi nhớ nhanh':
+        typeInstruction = 'Tạo bản tóm tắt tối ưu cho việc ghi nhớ, sử dụng kỹ thuật mnemonic, từ khóa nổi bật, và cấu trúc dễ nhớ. Ưu tiên những điểm cốt lõi nhất.';
+        break;
+      case 'Ôn tập thi':
+        typeInstruction = 'Tạo bản tóm tắt phục vụ ôn thi, tập trung vào các kiến thức trọng tâm, công thức, định nghĩa quan trọng và những điểm thường xuất hiện trong đề thi.';
+        break;
+      case 'Phân tích sâu':
+        typeInstruction = 'Tạo bản phân tích sâu, không chỉ tóm tắt mà còn giải thích nguyên nhân, hệ quả, ý nghĩa và mối liên hệ giữa các khái niệm.';
+        break;
+      default:
+        typeInstruction = 'Tạo bản tóm tắt tổng quan, cân bằng giữa độ chi tiết và tính súc tích.';
+    }
+
+    // Xây dựng instruction cho ngôn ngữ
+    let languageInstruction = '';
+    switch (language) {
+      case 'Chuyên môn':
+        languageInstruction = 'Sử dụng ngôn ngữ chuyên môn, thuật ngữ kỹ thuật chính xác.';
+        break;
+      case 'Học thuật':
+        languageInstruction = 'Sử dụng ngôn ngữ học thuật, trang trọng, có trích dẫn và dẫn chứng.';
+        break;
+      default:
+        languageInstruction = 'Sử dụng ngôn ngữ đơn giản, dễ hiểu, phù hợp với học sinh.';
+    }
+
+    // Xây dựng các yêu cầu bổ sung
+    const additionalRequirements: string[] = [];
     
-    Văn bản cần tóm tắt:
-    ---
-    ${text}
-    ---
-    `;
+    if (includeKeyTerms) {
+      additionalRequirements.push('- Liệt kê và giải thích các THUẬT NGỮ QUAN TRỌNG trong một mục riêng biệt');
+    }
+    
+    if (includeExamples) {
+      additionalRequirements.push('- Thêm VÍ DỤ MINH HỌA cụ thể để làm rõ các khái niệm chính');
+    }
+    
+    if (includeQuestions) {
+      additionalRequirements.push('- Kèm theo 3-5 CÂU HỎI KIỂM TRA để củng cố kiến thức đã tóm tắt');
+    }
+
+    const prompt = `Bạn là một chuyên gia tóm tắt nội dung học thuật. Nhiệm vụ của bạn là tạo bản tóm tắt chất lượng cao.
+
+**YÊU CẦU CHI TIẾT:**
+- Kiểu tóm tắt: ${summaryType}
+  ${typeInstruction}
+  
+- Độ dài: ${length}
+  ${length === 'Ngắn' ? '(Khoảng 100-200 từ, chỉ những điểm cốt lõi nhất)' : 
+    length === 'Vừa' ? '(Khoảng 200-400 từ, cân bằng giữa chi tiết và súc tích)' : 
+    '(Khoảng 400-600 từ, phân tích đầy đủ và chi tiết)'}
+  
+- Phong cách ngôn ngữ: ${language}
+  ${languageInstruction}
+
+${additionalRequirements.length > 0 ? '\n**YÊU CẦU BỔ SUNG:**\n' + additionalRequirements.join('\n') : ''}
+
+**QUAN TRỌNG:** KHÔNG sử dụng emoji hoặc biểu tượng cảm xúc trong nội dung tóm tắt. Chỉ sử dụng các ký tự văn bản thông thường, số, và các ký hiệu đặc biệt như dấu gạch đầu dòng, mũi tên (→), dấu sao (*), v.v.
+
+**VĂN BẢN CẦN TÓM TẮT:**
+---
+${text}
+---
+
+Hãy tạo bản tóm tắt theo đúng các yêu cầu trên. Đảm bảo nội dung chính xác, logic, và hữu ích cho việc học tập.`;
+
     try {
         const response: GenerateContentResponse = await model.generateContent({
             model: 'gemini-2.5-flash',

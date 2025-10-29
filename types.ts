@@ -1,4 +1,4 @@
-export type Page = 'dashboard' | 'study' | 'planner' | 'library' | 'analytics';
+export type Page = 'dashboard' | 'study' | 'planner' | 'library' | 'analytics' | 'intro';
 export type StudyTab = 'solve' | 'chat' | 'summary' | 'quiz';
 
 export interface ChatMessage {
@@ -24,8 +24,18 @@ export interface TodoItem {
   completed: boolean;
 }
 
+export interface StudyModule {
+  id: number;
+  title: string;
+  description: string;
+  completed: boolean;
+  color: string;
+  category: string;
+  createdDate: Date;
+}
+
 // New Library Types
-export type LibraryItemType = 'chat' | 'summary' | 'quiz';
+export type LibraryItemType = 'chat' | 'summary' | 'quiz' | 'module';
 
 interface StoredItemBase {
   id: number;
@@ -52,7 +62,15 @@ export interface StoredQuiz extends StoredItemBase {
   score: number;
 }
 
-export type StoredItem = StoredChat | StoredSummary | StoredQuiz;
+export interface StoredModule extends StoredItemBase {
+  type: 'module';
+  title: string;
+  description: string;
+  category: string;
+  color: string;
+}
+
+export type StoredItem = StoredChat | StoredSummary | StoredQuiz | StoredModule;
 
 // Fix: Add StoredItemCreation type to fix issues with Omit on a union type.
 // This explicit union type helps TypeScript correctly infer types at call sites
@@ -66,4 +84,11 @@ export type StoredItemCreation =
       quizData: QuizQuestion[];
       userAnswers: UserAnswer[];
       score: number;
+    }
+  | {
+      type: 'module';
+      title: string;
+      description: string;
+      category: string;
+      color: string;
     };

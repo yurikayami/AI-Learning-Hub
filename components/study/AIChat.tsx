@@ -226,7 +226,7 @@ const AIChat: React.FC<AIChatProps> = ({ addToLibrary }) => {
                             <button
                               onClick={handleAddCustomPrompt}
                               disabled={!newPromptLabel.trim() || !newPromptText.trim()}
-                              className="px-3 py-1.5 text-xs md:text-sm bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 disabled:from-indigo-300 disabled:to-purple-300 font-medium"
+                              className="px-3 py-1.5 text-xs md:text-sm bg-slate-900 text-white rounded-lg hover:bg-slate-800 disabled:bg-slate-300 font-medium"
                             >
                               Lưu
                             </button>
@@ -273,7 +273,7 @@ const AIChat: React.FC<AIChatProps> = ({ addToLibrary }) => {
         )}
         {history.map((msg, index) => (
           <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className={`max-w-[85%] md:max-w-xl p-3 md:p-4 rounded-2xl text-sm md:text-base ${msg.role === 'user' ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-br-none' : 'bg-slate-100 text-slate-800 rounded-bl-none'}`}>
+            <div className={`max-w-[85%] md:max-w-xl p-3 md:p-4 rounded-2xl text-sm md:text-base ${msg.role === 'user' ? 'bg-slate-900 text-white rounded-br-none' : 'bg-slate-100 text-slate-800 rounded-bl-none'}`}>
               <MarkdownRenderer content={msg.parts[0].text} />
             </div>
           </div>
@@ -363,7 +363,7 @@ const AIChat: React.FC<AIChatProps> = ({ addToLibrary }) => {
                     <button
                       onClick={handleAddCustomPrompt}
                       disabled={!newPromptLabel.trim() || !newPromptText.trim()}
-                      className="px-2 md:px-3 py-1 md:py-1.5 text-xs bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 disabled:from-indigo-300 disabled:to-purple-300 font-medium"
+                      className="px-2 md:px-3 py-1 md:py-1.5 text-xs bg-slate-900 text-white rounded-lg hover:bg-slate-800 disabled:bg-slate-300 font-medium"
                     >
                       Lưu
                     </button>
@@ -415,7 +415,7 @@ const AIChat: React.FC<AIChatProps> = ({ addToLibrary }) => {
           <button
             onClick={handleSend}
             disabled={isLoading || !input.trim()}
-            className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-2 md:p-3 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all disabled:from-indigo-300 disabled:to-purple-300 disabled:cursor-not-allowed shadow-md"
+            className="bg-slate-900 text-white p-3 rounded-lg hover:bg-slate-800 transition-all disabled:bg-slate-300 disabled:cursor-not-allowed shadow-sm"
             aria-label="Gửi"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-6 md:w-6" viewBox="0 0 20 20" fill="currentColor">

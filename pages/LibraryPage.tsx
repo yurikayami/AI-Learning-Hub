@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import type { StoredItem, LibraryItemType, ChatMessage, StoredQuiz } from '../types';
-import { ChatBubbleIcon, DocumentTextIcon, QuestionMarkCircleIcon } from '../components/icons/Icons';
+import type { StoredItem, LibraryItemType, ChatMessage, StoredQuiz, StoredModule } from '../types';
+import { ChatBubbleIcon, DocumentTextIcon, QuestionMarkCircleIcon, BookmarkIcon } from '../components/icons/Icons';
 import MarkdownRenderer from '../components/MarkdownRenderer';
 
 
@@ -9,12 +9,14 @@ const LibraryItemCard: React.FC<{ item: StoredItem, onSelect: () => void }> = ({
         chat: <ChatBubbleIcon className="w-5 h-5 md:w-6 md:h-6" />,
         summary: <DocumentTextIcon className="w-5 h-5 md:w-6 md:h-6" />,
         quiz: <QuestionMarkCircleIcon className="w-5 h-5 md:w-6 md:h-6" />,
+        module: <BookmarkIcon className="w-5 h-5 md:w-6 md:h-6" />,
     };
 
     const colors = {
         chat: 'bg-purple-100 text-purple-600',
         summary: 'bg-green-100 text-green-600',
         quiz: 'bg-orange-100 text-orange-600',
+        module: 'bg-blue-100 text-blue-600',
     };
 
     const getTitle = () => {
@@ -25,6 +27,8 @@ const LibraryItemCard: React.FC<{ item: StoredItem, onSelect: () => void }> = ({
                 return `Tóm tắt: "${item.sourceText.substring(0, 30)}..."`;
             case 'quiz':
                 return `Quiz: ${item.quizData.length} câu hỏi`;
+            case 'module':
+                return item.title;
         }
     }
 
@@ -92,6 +96,72 @@ const QuizDetail: React.FC<{ item: StoredQuiz }> = ({ item }) => (
     </div>
 );
 
+const ModuleDetail: React.FC<{ item: StoredModule }> = ({ item }) => {
+    // Parse description để tách ra các modules
+    const modules = item.description.split('\n').filter(line => line.trim());
+    
+    return (
+        <div>
+            <div className="relative bg-gradient-to-br from-slate-50 to-white border-2 border-slate-200 rounded-xl p-6 mb-4">
+                <div className={`absolute top-0 left-0 right-0 h-2 ${item.color} rounded-t-xl`}></div>
+                <div className="mt-2">
+                    <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-4">{item.title}</h3>
+                </div>
+            </div>
+            
+            {/* Module List */}
+            <div className="space-y-3 mb-4">
+                {modules.map((module, index) => {
+                    // Tách title và description từ format "1. Title: Description"
+                    const match = module.match(/^\d+\.\s*(.+?):\s*(.+)$/);
+                    const title = match ? match[1] : module;
+                    const description = match ? match[2] : '';
+                    const colors = ['bg-blue-500', 'bg-purple-500', 'bg-pink-500', 'bg-green-500', 'bg-yellow-500', 'bg-red-500'];
+                    
+                    return (
+                        <div
+                            key={index}
+                            className="relative bg-white border-2 border-slate-200 rounded-lg p-4 transition-all hover:border-slate-300"
+                        >
+                            {/* Color Bar */}
+                            <div className={`absolute top-0 left-0 right-0 h-1.5 ${colors[index % colors.length]} rounded-t-lg`}></div>
+                            
+                            {/* Content */}
+                            <div className="flex items-start gap-3 mt-1">
+                                <div className="flex-1">
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <span className="text-xs font-bold text-slate-400">#{index + 1}</span>
+                                    </div>
+                                    <h4 className="font-semibold text-sm mb-1 text-slate-800">
+                                        {title}
+                                    </h4>
+                                    {description && (
+                                        <p className="text-xs text-slate-600">
+                                            {description}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+            
+            <div className="bg-gradient-to-r from-indigo-50 to-purple-50 p-4 rounded-lg border border-indigo-200">
+                <div className="flex items-start gap-2">
+                    <BookmarkIcon className="w-5 h-5 text-indigo-600 flex-shrink-0 mt-0.5" />
+                    <div>
+                        <p className="text-xs font-medium text-indigo-900 mb-1">Lộ trình học tập</p>
+                        <p className="text-xs text-indigo-700">
+                            Đây là lộ trình học tập được tạo bởi AI. Bạn có thể tham khảo và ôn tập theo từng bước!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 
 const LibraryPage: React.FC<{ items: StoredItem[] }> = ({ items }) => {
     const [filter, setFilter] = useState<'all' | LibraryItemType>('all');
@@ -111,15 +181,18 @@ const LibraryPage: React.FC<{ items: StoredItem[] }> = ({ items }) => {
                 return <SummaryDetail sourceText={selectedItem.sourceText} summaryText={selectedItem.summaryText} />;
             case 'quiz':
                 return <QuizDetail item={selectedItem} />;
+            case 'module':
+                return <ModuleDetail item={selectedItem} />;
             default:
                 return null;
         }
     };
 
     const filters: { id: 'all' | LibraryItemType, label: string }[] = [
-        { id: 'all', label: 'Tất cả' },
-        { id: 'chat', label: 'Lịch sử Chat' },
-        { id: 'summary', label: 'Tóm tắt' },
+        { id: 'all', label: 'All' },
+        { id: 'module', label: 'Planner' },
+        { id: 'chat', label: 'History Chat' },
+        { id: 'summary', label: 'Summary' },
         { id: 'quiz', label: 'Quiz' },
     ];
 

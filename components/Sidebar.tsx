@@ -1,4 +1,3 @@
-
 import React from 'react';
 import type { Page } from '../types';
 import { HomeIcon, BookOpenIcon, CalendarIcon, LibraryIcon, ChartBarIcon, MenuIcon, XMarkIcon } from './icons/Icons';
@@ -12,11 +11,11 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ activePage, setActivePage, isSidebarOpen, setIsSidebarOpen }) => {
   const navItems = [
-    { id: 'dashboard', label: 'Bảng điều khiển', icon: HomeIcon },
-    { id: 'study', label: 'Phòng học AI', icon: BookOpenIcon },
-    { id: 'planner', label: 'Kế hoạch', icon: CalendarIcon },
-    { id: 'library', label: 'Thư viện', icon: LibraryIcon },
-    { id: 'analytics', label: 'Thống kê', icon: ChartBarIcon },
+    { id: 'dashboard', label: 'DashBoard', icon: HomeIcon },
+    { id: 'study', label: 'Study Room AI', icon: BookOpenIcon },
+    { id: 'planner', label: 'Planner', icon: CalendarIcon },
+    { id: 'library', label: 'Library', icon: LibraryIcon },
+    { id: 'analytics', label: 'Stats', icon: ChartBarIcon },
   ];
 
   const handleNavClick = (page: Page) => {
