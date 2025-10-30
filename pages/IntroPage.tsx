@@ -53,6 +53,8 @@ const IntroPage: React.FC<IntroPageProps> = ({ onEnterApp }) => {
                   src="https://i.ibb.co/Q7bbCsLS/homepage.png" 
                   alt="MentorAI Homepage Screenshot" 
                   className="w-full h-auto"
+                  loading="eager"
+                  decoding="async"
                 />
               </div>
               {/* Glow effect */}
@@ -109,6 +111,8 @@ const IntroPage: React.FC<IntroPageProps> = ({ onEnterApp }) => {
                       src="https://i.ibb.co/9mz3KfMc/homework.png" 
                       alt="AI Homework Solver" 
                       className="w-full h-auto"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                 </div>
@@ -127,6 +131,8 @@ const IntroPage: React.FC<IntroPageProps> = ({ onEnterApp }) => {
                       src="https://i.ibb.co/Kp90SVcq/chatbot.png" 
                       alt="AI Chat Assistant" 
                       className="w-full h-auto"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                 </div>
@@ -195,6 +201,8 @@ const IntroPage: React.FC<IntroPageProps> = ({ onEnterApp }) => {
                       src="https://i.ibb.co/q34XypTd/quiz.png" 
                       alt="Quiz Generator" 
                       className="w-full h-auto"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                 </div>
@@ -213,6 +221,8 @@ const IntroPage: React.FC<IntroPageProps> = ({ onEnterApp }) => {
                       src="https://i.ibb.co/V0V75Dm7/planner.png" 
                       alt="Study Planner" 
                       className="w-full h-auto"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                 </div>
